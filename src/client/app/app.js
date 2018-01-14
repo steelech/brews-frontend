@@ -1,27 +1,19 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import gql from 'graphql-tag';
 import { ApolloProvider, graphql } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-
-
-const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:5000/graphql' }),
-  cache: new InMemoryCache()
-});
-
-
+import client from './graphql/client';
+import { PlacesQuery } from './graphql/queries';
 
 class App extends React.Component {
   render () {
-    return <p> Hello React project</p>;  }
+    return <p> Hello React project</p>;
+  }
 }
-const MY_QUERY = gql`query Place { place { name, id } }`;
 
-const AppWithData = graphql(MY_QUERY)(App)
+const AppWithData = graphql(PlacesQuery, {
+  options: { variables: { location: '42.3601,-71.0589' } }
+})(App);
 render(
   <ApolloProvider client={client}>
     <AppWithData />
