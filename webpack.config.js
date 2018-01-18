@@ -3,6 +3,7 @@ var path = require('path');
 
 var BUILD_DIR = path.resolve(__dirname, 'src/client/public/');
 var APP_DIR = path.resolve(__dirname, 'src/client/app/');
+var STYLES_DIR = path.resolve(__dirname, 'src/client/styles')
 
 var config = {
   entry: APP_DIR + '/app.js',
@@ -16,7 +17,12 @@ var config = {
         test : /\.js?/,
         include : APP_DIR,
         loader : 'babel-loader'
-      }
+      },
+      {
+        test: /\.less$/,
+        include: STYLES_DIR,
+        loader: "style-loader!css-loader!autoprefixer-loader!less-loader"
+      },
     ]
   }
 }

@@ -1,22 +1,28 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import { ApolloProvider, graphql } from 'react-apollo';
+import { ApolloProvider } from 'react-apollo';
 import client from './graphql/client';
-import { PlacesQuery } from './graphql/queries';
+import BreweriesWithData from '../app/components/Breweries';
+
+import styles from '../styles/app.less';
 
 class App extends React.Component {
   render () {
-    return <p> Hello React project</p>;
+    return (
+      <div className='app'>
+        {this.props.children}
+      </div>
+    )
   }
 }
 
-const AppWithData = graphql(PlacesQuery, {
-  options: { variables: { location: '42.3601,-71.0589' } }
-})(App);
+
 render(
   <ApolloProvider client={client}>
-    <AppWithData />
+    <App>
+      <BreweriesWithData />
+    </App>
   </ApolloProvider>,
   document.getElementById('app')
 );

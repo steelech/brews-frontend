@@ -13,4 +13,23 @@ const PlacesQuery =
       }
   `
 
-export { PlacesQuery }
+const BreweriesQuery =
+  gql`
+    query Breweries
+      {
+        breweries
+          {
+            name
+            streetAddress,
+            locality,
+            region,
+            postalCode,
+            phone,
+            website,
+            latitude,
+            longitude,
+          }
+      }
+  `
+
+export { PlacesQuery, BreweriesQuery }
