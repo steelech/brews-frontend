@@ -3,7 +3,7 @@ import { BreweriesQuery } from '../graphql/queries';
 
 import BreweryListWithData from '../components/breweries/BreweryList';
 import LocationForm from '../components/breweries/LocationForm';
-
+import LocationModal from '../components/breweries/LocationModal';
 import styles from '../../styles/components/breweries.less';
 
 class Breweries extends React.Component {
@@ -48,6 +48,7 @@ class Breweries extends React.Component {
             </div>
           : <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
         }
+        <LocationModal loading={this.state.loading} location={this.state.location}/>
       </div>
     )
   }
