@@ -1,23 +1,10 @@
 import gql from 'graphql-tag';
 
-const PlacesQuery =
-  gql`
-    query Places($location: String)
-      {
-        places(location: $location)
-          {
-            name,
-            id,
-            address
-          }
-      }
-  `
-
 const BreweriesQuery =
   gql`
-    query Breweries
+    query Breweries($location: String, $radius: Float)
       {
-        breweries
+        breweries(location: $location, radius: $radius)
           {
             name
             streetAddress,
@@ -32,4 +19,4 @@ const BreweriesQuery =
       }
   `
 
-export { PlacesQuery, BreweriesQuery }
+export { BreweriesQuery }

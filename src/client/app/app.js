@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 
 import { ApolloProvider } from 'react-apollo';
 import client from './graphql/client';
-import BreweriesWithData from '../app/components/Breweries';
+import Breweries from '../app/components/Breweries';
 
 import styles from '../styles/app.less';
 
@@ -21,7 +21,7 @@ class App extends React.Component {
 render(
   <ApolloProvider client={client}>
     <App>
-      <BreweriesWithData />
+      <Breweries />
     </App>
   </ApolloProvider>,
   document.getElementById('app')
