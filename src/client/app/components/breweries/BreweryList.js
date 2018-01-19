@@ -3,6 +3,8 @@ import { graphql, withApollo } from 'react-apollo';
 
 import { BreweriesQuery } from '../../graphql/queries';
 
+import BreweryListItem from '../../components/breweries/BreweryListItem';
+
 class BreweryList extends React.Component {
   render() {
     return (
@@ -12,7 +14,7 @@ class BreweryList extends React.Component {
             ? <div>
                 {
                   this.props.data.breweries.map(brewery => (
-                    <div>{brewery.name}</div>
+                    <BreweryListItem brewery={brewery} />
                   ))
                 }
               </div>

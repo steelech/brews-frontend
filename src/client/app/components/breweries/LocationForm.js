@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../../../styles/components/breweries/location-form.less';
 
 class LocationForm extends React.Component {
   constructor(props) {
@@ -26,11 +27,33 @@ class LocationForm extends React.Component {
   }
   render() {
     return (
-      <div>
-        <input type='text' value={this.state.location} onChange={(e) => this.handleLocationChange(e)}/>
-        <input type='text' value={this.state.radius} onChange={(e) => this.handleRadiusChange(e)}/>
-        <div onClick={() => this.handleSubmit()}>
-          Submit
+      <div className='location-form'>
+        <div className='location-input'>
+          <label>
+            Location:
+            <input
+              type='text'
+              value={this.state.location}
+              onChange={(e) => this.handleLocationChange(e)}
+              placeholder='lat,long'
+            />
+          </label>
+        </div>
+        <div className='radius-input'>
+          <label>
+            Radius:
+            <input
+              type='text'
+              value={this.state.radius}
+              onChange={(e) => this.handleRadiusChange(e)}
+              placeholder='miles'
+            />
+          </label>
+        </div>
+        <div className='location-form-submit'>
+          <div onClick={() => this.handleSubmit()}>
+            Submit
+          </div>
         </div>
       </div>
     )

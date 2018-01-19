@@ -37,7 +37,9 @@ class Breweries extends React.Component {
   render () {
     return (
       <div className='breweries'>
-        <h1>Breweries</h1>
+        <div className='breweries-header'>
+          <h1>Breweries</h1>
+        </div>
         <LocationForm onSubmit={(data) => this.onFormSubmit(data)}/>
         {
           this.state.loading
