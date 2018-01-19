@@ -4,11 +4,13 @@ import { graphql, withApollo } from 'react-apollo';
 import { BreweriesQuery } from '../../graphql/queries';
 
 import BreweryListItem from '../../components/breweries/BreweryListItem';
+import styles from '../../../styles/components/breweries/brewery-list.less';
+
 
 class BreweryList extends React.Component {
   render() {
     return (
-      <div>
+      <div className='brewery-list'>
         {
           !this.props.data.loading
             ? <div>

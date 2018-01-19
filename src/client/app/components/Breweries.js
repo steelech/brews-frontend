@@ -46,9 +46,7 @@ class Breweries extends React.Component {
           ? <div>
             Loading
             </div>
-          : <div>
-              <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
-            </div>
+          : <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
         }
       </div>
     )
