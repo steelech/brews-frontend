@@ -20,7 +20,7 @@ class Breweries extends React.Component {
         let positionString = `${position.coords.latitude},${position.coords.longitude}`
         this.setState({
           location: positionString,
-          loading: false
+          loading: false,
         })
       })
   }
@@ -34,13 +34,18 @@ class Breweries extends React.Component {
     }
     this.setState(updated);
   }
+
   render () {
     return (
       <div className='breweries'>
         <div className='breweries-header'>
           <h1>Breweries</h1>
         </div>
-        <LocationForm onSubmit={(data) => this.onFormSubmit(data)}/>
+        <LocationForm
+          startLocation={this.state.location}
+          onSubmit={(data) => this.onFormSubmit(data)}
+          loading={this.state.loading}
+        />
         {
           this.state.loading
           ? <div>
@@ -48,7 +53,6 @@ class Breweries extends React.Component {
             </div>
           : <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
         }
-        <LocationModal loading={this.state.loading} location={this.state.location}/>
       </div>
     )
   }

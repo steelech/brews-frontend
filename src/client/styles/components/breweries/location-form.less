@@ -2,40 +2,58 @@
   padding-top: 5px;
   font-family: sans-serif;
   padding-bottom: 20px;
-  display: inline-block;
-  width: 50%;
+  display: inline-flex;
+  width: 75%;
   border-bottom: 1px solid lightgrey;
 
-  .location-input {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  .location-chooser {
+    width: 45%;
+    display: inline-flex;
 
-    input {
+    .location-chooser-label {
+      padding: 5px;
+    }
+    .location-chooser-button-wrapper {
+      margin-left: 25px;
+      padding: 5px;
       border-radius: 3px;
-      border: 1px solid lightgrey;
-      font-size: 25px;
-      margin-left: 15px;
+      border: .5px solid lightgrey;
+      cursor: pointer;
     }
   }
 
   .radius-input {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 30%;
+    display: inline-flex;
 
-    input {
-      border-radius: 3px;
-      border: 1px solid lightgrey;
-      font-size: 25px;
-      margin-left: 15px;
+    .radius-input-label {
+      padding: 5px;
+    }
+
+    .radius-input-wrapper {
+      margin-left: 20px;
+      padding: 5px;
+      input {
+        width: 50%;
+        font-size: 25px;
+        margin-right: 50%;
+        border-radius: 3px;
+        border: 1px solid lightgrey;
+      }
     }
   }
 
   .location-form-submit {
-    width: 20%;
-    margin-left: 40%;
-    margin-right: 40%;
-    background: #2edaae66;
-    color: #243126;
-    border-radius: 3px;
+    width: 25%;
+    .location-form-submit-button {
+      width: 30%;
+      margin-left: 35%;
+      margin-right: 35%;
+      border-radius: 5px;
+      padding: 5px;
+      background: #2edaae66;
+      color: #243126;
+      cursor: pointer;
+    }
   }
 }
