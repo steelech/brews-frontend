@@ -3,6 +3,16 @@ import React from 'react';
 import styles from '../../../styles/components/ui/google-maps.less';
 
 class GoogleMaps extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: this.props.location,
+      name: this.props.name
+    }
+  }
+  handleLocationSelection(e, marker) {
+    debugger
+  }
   componentDidMount() {
     var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
     let map = new window.google.maps.Map(document.getElementById('map'), {
@@ -15,6 +25,7 @@ class GoogleMaps extends React.Component {
       map: map,
       title: 'Hello World!'
     });
+    window.google.maps.event.addDomListener(marker, 'click', (e) => this.handleLocationSelection(e, marker))
 
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -25,7 +36,7 @@ class GoogleMaps extends React.Component {
     });
 
     var markers = [];
-    searchBox.addListener('places_changed', function() {
+    searchBox.addListener('places_changed', () => {
       var places = searchBox.getPlaces();
 
       if (places.length == 0) {
@@ -38,7 +49,7 @@ class GoogleMaps extends React.Component {
       markers = [];
 
       var bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
+      places.forEach((place) => {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
           return;
@@ -51,12 +62,14 @@ class GoogleMaps extends React.Component {
           scaledSize: new google.maps.Size(25, 25)
         };
 
-        markers.push(new google.maps.Marker({
+        let marker = new google.maps.Marker({
           map: map,
           icon: icon,
           title: place.name,
           position: place.geometry.location
-        }));
+        })
+        window.google.maps.event.addDomListener(marker, 'click', (e) => this.handleLocationSelection(e, place))
+        markers.push(marker);
 
         if (place.geometry.viewport) {
           bounds.union(place.geometry.viewport);
@@ -70,7 +83,7 @@ class GoogleMaps extends React.Component {
   render() {
     return (
       <div>
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+        <input id="pac-input" className="controls" type="text" placeholder="Search Box" />
         <div id='map'></div>
       </div>
     )

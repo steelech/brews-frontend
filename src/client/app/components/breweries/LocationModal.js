@@ -6,13 +6,12 @@ import styles from '../../../styles/components/breweries/location-modal.less';
 class LocationModal extends React.Component {
   render() {
     return (
-      <Modal show={this.props.show}>
+      <Modal
+        show={this.props.show}
+        onClose={this.props.onClose}
+      >
         <div className='location-modal'>
-          {
-            !this.props.loading
-              ? <GoogleMaps location={this.props.location}/>
-              : null
-          }
+          <GoogleMaps location={this.props.location}/>
         </div>
       </Modal>
     )

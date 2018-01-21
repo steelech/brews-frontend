@@ -10,6 +10,7 @@ class LocationForm extends React.Component {
       location: this.props.startLocation,
       radius: '',
       isOpen: false,
+      name: 'Current Location'
     }
   }
   toggleModal() {
@@ -44,7 +45,7 @@ class LocationForm extends React.Component {
             className='location-chooser-button-wrapper'
             onClick={() => this.toggleModal()}
             >
-            Current Location
+            {this.state.name}
           </div>
         </div>
 
@@ -70,9 +71,9 @@ class LocationForm extends React.Component {
           </div>
         </div>
         <LocationModal
+          onClose={() => this.toggleModal()}
           show={this.state.isOpen}
           location={this.props.startLocation}
-          loading={this.props.loading}
         />
       </div>
     )

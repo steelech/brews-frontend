@@ -41,17 +41,18 @@ class Breweries extends React.Component {
         <div className='breweries-header'>
           <h1>Breweries</h1>
         </div>
-        <LocationForm
-          startLocation={this.state.location}
-          onSubmit={(data) => this.onFormSubmit(data)}
-          loading={this.state.loading}
-        />
         {
           this.state.loading
-          ? <div>
-            Loading
-            </div>
-          : <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
+            ? <div>
+                Loading
+              </div>
+            : <div>
+                <LocationForm
+                  startLocation={this.state.location}
+                  onSubmit={(data) => this.onFormSubmit(data)}
+                />
+                <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
+              </div>
         }
       </div>
     )
