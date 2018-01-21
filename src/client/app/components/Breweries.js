@@ -50,6 +50,7 @@ class Breweries extends React.Component {
                 <LocationForm
                   startLocation={this.state.location}
                   onSubmit={(data) => this.onFormSubmit(data)}
+                  name='Current Location'
                 />
                 <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
               </div>

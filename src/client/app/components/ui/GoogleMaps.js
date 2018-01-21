@@ -10,8 +10,8 @@ class GoogleMaps extends React.Component {
       name: this.props.name
     }
   }
-  handleLocationSelection(e, marker) {
-    debugger
+  handleLocationSelection(params) {
+    this.props.onSelectLocation(params);
   }
   componentDidMount() {
     var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
@@ -25,7 +25,12 @@ class GoogleMaps extends React.Component {
       map: map,
       title: 'Hello World!'
     });
-    window.google.maps.event.addDomListener(marker, 'click', (e) => this.handleLocationSelection(e, marker))
+    window.google.maps.event.addDomListener(marker, 'click', (e) => {
+        this.handleLocationSelection({
+          name: this.state.name,
+          location: this.state.location
+        });
+    })
 
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
@@ -68,7 +73,13 @@ class GoogleMaps extends React.Component {
           title: place.name,
           position: place.geometry.location
         })
-        window.google.maps.event.addDomListener(marker, 'click', (e) => this.handleLocationSelection(e, place))
+        window.google.maps.event.addDomListener(marker, 'click', (e) => {
+          var params = {
+            location: `${place.geometry.location.lat()},${place.geometry.location.lng()}`,
+            name: `${place.formatted_address}`
+          }
+          this.handleLocationSelection(params)
+        });
         markers.push(marker);
 
         if (place.geometry.viewport) {
@@ -82,7 +93,10 @@ class GoogleMaps extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div
+        id='google-maps-wrapper'
+        className='google-maps-wrapper'
+      >
         <input id="pac-input" className="controls" type="text" placeholder="Search Box" />
         <div id='map'></div>
       </div>

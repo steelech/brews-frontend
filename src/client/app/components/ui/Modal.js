@@ -4,7 +4,9 @@ import styles from '../../../styles/components/ui/modal.less'
 
 class Modal extends React.Component {
   handleClose(e) {
-    this.props.onClose();
+    if (e.target.id == 'backdrop') {
+      this.props.onClose();
+    }
   }
   render() {
     if(!this.props.show) {
@@ -12,6 +14,7 @@ class Modal extends React.Component {
     }
     return (
       <div
+        id='backdrop'
         className='backdrop'
         onClick={(e) => this.handleClose(e)}
       >

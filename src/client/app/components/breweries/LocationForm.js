@@ -10,7 +10,7 @@ class LocationForm extends React.Component {
       location: this.props.startLocation,
       radius: '',
       isOpen: false,
-      name: 'Current Location'
+      name: this.props.name
     }
   }
   toggleModal() {
@@ -18,9 +18,11 @@ class LocationForm extends React.Component {
       isOpen: !this.state.isOpen
     })
   }
-  handleLocationChange(event) {
+  handleLocationChange(place) {
     this.setState({
-      location: event.target.value
+      name: place.name,
+      location: place.location,
+      isOpen: false
     })
   }
   handleRadiusChange(event) {
@@ -73,7 +75,9 @@ class LocationForm extends React.Component {
         <LocationModal
           onClose={() => this.toggleModal()}
           show={this.state.isOpen}
-          location={this.props.startLocation}
+          location={this.state.location}
+          name={this.state.name}
+          onSubmit={(place) => this.handleLocationChange(place)}
         />
       </div>
     )
