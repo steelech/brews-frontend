@@ -23,7 +23,11 @@ class BreweryList extends React.Component {
                   }
                 </div>
                 <div className='brewery-map-wrapper'>
-                  <BreweriesMap location={this.props.location} />
+                  <BreweriesMap
+                    location={this.props.location}
+                    breweries={this.props.data.breweries}
+                    radius={this.props.radius}
+                  />
                 </div>
               </div>
             : <div>
