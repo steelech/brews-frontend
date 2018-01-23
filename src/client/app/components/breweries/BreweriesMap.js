@@ -5,9 +5,27 @@ import BluBlank from '../../../assets/blu-blank.png';
 import RedCircle from '../../../assets/red-circle.png';
 
 class BreweriesMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markers: []
+    }
+  }
+  handleMarkerClick(thisMarker) {
+    this.state.markers.forEach((marker) => {
+      if (marker.marker == thisMarker) {
+        marker.marker.setIcon(BluCircle)
+        marker.infoWindow.open(this.map, thisMarker)
+      } else {
+        marker.marker.setIcon(BluBlank);
+        marker.infoWindow.close();
+      }
+    })
+  }
   addMarkers() {
     var breweries = this.props.breweries;
     var bounds = new google.maps.LatLngBounds();
+    var markers = [];
     breweries.map((brewery) => {
       var contentString = brewery.name;
       var contentString = `
@@ -30,13 +48,17 @@ class BreweriesMap extends React.Component {
       var infoWindow = new window.google.maps.InfoWindow({
         content: contentString
       })
-      marker.addListener('click', () => {
-        infoWindow.open(this.map, marker)
-        marker.setIcon(BluCircle)
+      markers.push({
+        marker,
+        infoWindow
       })
+      marker.addListener('click', () => this.handleMarkerClick(marker));
       bounds.extend(marker.getPosition())
     })
     this.map.fitBounds(bounds);
+    this.setState({
+      markers
+    })
   }
   componentDidMount() {
     var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
