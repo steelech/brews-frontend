@@ -4,6 +4,7 @@ var path = require('path');
 var BUILD_DIR = path.resolve(__dirname, 'src/client/public/');
 var APP_DIR = path.resolve(__dirname, 'src/client/app/');
 var STYLES_DIR = path.resolve(__dirname, 'src/client/styles')
+var ASSETS_DIR = path.resolve(__dirname, 'src/client/assets')
 
 var config = {
   entry: APP_DIR + '/app.js',
@@ -23,6 +24,11 @@ var config = {
         include: STYLES_DIR,
         loader: "style-loader!css-loader!autoprefixer-loader!less-loader"
       },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        include: ASSETS_DIR,
+        loader: "file-loader"
+      }
     ]
   }
 }

@@ -1,5 +1,8 @@
 import React from 'react';
 import styles from '../../../styles/components/breweries/breweries-map.less';
+import BluCircle from '../../../assets/blu-circle.png';
+import BluBlank from '../../../assets/blu-blank.png';
+import RedCircle from '../../../assets/red-circle.png';
 
 class BreweriesMap extends React.Component {
   addMarkers() {
@@ -21,13 +24,15 @@ class BreweriesMap extends React.Component {
         position: {
           lat: brewery.latitude,
           lng: brewery.longitude
-        }
+        },
+        icon: BluBlank
       });
       var infoWindow = new window.google.maps.InfoWindow({
         content: contentString
       })
       marker.addListener('click', () => {
         infoWindow.open(this.map, marker)
+        marker.setIcon(BluCircle)
       })
       bounds.extend(marker.getPosition())
     })
