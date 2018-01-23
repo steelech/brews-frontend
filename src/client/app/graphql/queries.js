@@ -15,7 +15,9 @@ const BreweriesQuery =
             website,
             latitude,
             longitude,
-            distance
+            distance,
+            formattedAddress,
+            rating
           }
       }
   `

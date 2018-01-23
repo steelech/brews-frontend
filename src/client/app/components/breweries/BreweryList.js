@@ -29,6 +29,9 @@ class BreweryList extends React.Component {
                     radius={this.props.radius}
                   />
                 </div>
+                {/* <div>
+                  Get Directions
+                </div> */}
               </div>
             : <div>
                 Loading
