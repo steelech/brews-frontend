@@ -3,7 +3,11 @@ import styles from '../../../styles/components/breweries/brewery-list-item.less'
 
 const BreweryListItem = (props) => {
   return (
-    <div className='brewery-list-item'>
+    <div
+      className='brewery-list-item'
+      onMouseEnter={() => props.onHover(props.brewery)}
+      onMouseLeave={() => props.onLeave(props.brewery)}
+    >
       <div>
         {props.brewery.name}
       </div>

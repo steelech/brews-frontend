@@ -8,8 +8,10 @@ class BreweriesMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: []
+      markers: [],
+      hovered: null
     }
+    this.handleHover = this.handleHover.bind(this);
   }
   handleMarkerClick(thisMarker) {
     this.state.markers.forEach((marker) => {
@@ -21,6 +23,19 @@ class BreweriesMap extends React.Component {
         marker.infoWindow.close();
       }
     })
+  }
+  handleHover(nextProps) {
+    this.state.markers.forEach((marker) => {
+      if (marker.id == (nextProps.hovered || {}).id) {
+        marker.marker.setIcon(RedCircle)
+      } else {
+        marker.marker.setIcon(BluBlank);
+      }
+    })
+
+  }
+  componentWillReceiveProps(nextProps) {
+    this.handleHover(nextProps);
   }
   addMarkers() {
     var breweries = this.props.breweries;
@@ -36,6 +51,12 @@ class BreweriesMap extends React.Component {
           ${brewery.formattedAddress}
         </div>
       `
+      var icon;
+      if ((this.props.hovered || {}).id == brewery.id) {
+        icon = RedCircle;
+      } else {
+        icon = BluBlank
+      }
       var marker = new window.google.maps.Marker({
         map: this.map,
         title: brewery.name,
@@ -43,12 +64,13 @@ class BreweriesMap extends React.Component {
           lat: brewery.latitude,
           lng: brewery.longitude
         },
-        icon: BluBlank
+        icon
       });
       var infoWindow = new window.google.maps.InfoWindow({
         content: contentString
       })
       markers.push({
+        id: brewery.id,
         marker,
         infoWindow
       })

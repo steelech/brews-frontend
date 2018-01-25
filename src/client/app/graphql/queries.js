@@ -6,6 +6,7 @@ const BreweriesQuery =
       {
         breweries(location: $location, radius: $radius)
           {
+            id,
             name
             streetAddress,
             locality,

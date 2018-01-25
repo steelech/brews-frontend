@@ -9,6 +9,23 @@ import styles from '../../../styles/components/breweries/brewery-list.less';
 
 
 class BreweryList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovered: null
+    }
+    this.handleHover = this.handleHover.bind(this);
+  }
+  handleHover(brewery) {
+    this.setState({
+      hovered: brewery
+    })
+  }
+  handleMouseLeave(brewery) {
+    this.setState({
+      hovered: null
+    })
+  }
   render() {
     return (
       <div className='brewery-list'>
@@ -18,20 +35,22 @@ class BreweryList extends React.Component {
                 <div className='brewery-list-content'>
                   {
                     this.props.data.breweries.map(brewery => (
-                      <BreweryListItem brewery={brewery} />
+                      <BreweryListItem
+                        brewery={brewery}
+                        onHover={(brewery) => this.handleHover(brewery)}
+                        onLeave={(brewery) => this.handleMouseLeave(brewery)}
+                      />
                     ))
                   }
                 </div>
                 <div className='brewery-map-wrapper'>
                   <BreweriesMap
+                    hovered={this.state.hovered}
                     location={this.props.location}
                     breweries={this.props.data.breweries}
                     radius={this.props.radius}
                   />
                 </div>
-                {/* <div>
-                  Get Directions
-                </div> */}
               </div>
             : <div>
                 Loading
