@@ -1,106 +1,39 @@
 import React from 'react';
+import { BreweriesQuery } from '../../graphql/queries';
+import { graphql, withApollo } from 'react-apollo';
+import Map from '../../components/breweries/breweries-map/Map';
+import List from '../../components/breweries/breweries-map/List';
+import LocationForm from '../../components/breweries/LocationForm';
 import styles from '../../../styles/components/breweries/breweries-map.less';
-import BluCircle from '../../../assets/blu-circle.png';
-import BluBlank from '../../../assets/blu-blank.png';
-import RedCircle from '../../../assets/red-circle.png';
+
 
 class BreweriesMap extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      markers: [],
-      hovered: null
+  render() {
+    if (this.props.data.loading) {
+      return (
+        <div>
+          Loading
+        </div>
+      )
     }
-    this.handleHover = this.handleHover.bind(this);
-  }
-  handleMarkerClick(thisMarker) {
-    this.state.markers.forEach((marker) => {
-      if (marker.marker == thisMarker) {
-        marker.marker.setIcon(BluCircle)
-        marker.infoWindow.open(this.map, thisMarker)
-      } else {
-        marker.marker.setIcon(BluBlank);
-        marker.infoWindow.close();
-      }
-    })
-  }
-  handleHover(nextProps) {
-    this.state.markers.forEach((marker) => {
-      if (marker.id == (nextProps.hovered || {}).id) {
-        marker.marker.setIcon(RedCircle)
-      } else {
-        marker.marker.setIcon(BluBlank);
-      }
-    })
-
-  }
-  componentWillReceiveProps(nextProps) {
-    this.handleHover(nextProps);
-  }
-  addMarkers() {
-    var breweries = this.props.breweries;
-    var bounds = new google.maps.LatLngBounds();
-    var markers = [];
-    breweries.map((brewery) => {
-      var contentString = brewery.name;
-      var contentString = `
-        <div>
-          ${brewery.name}
-        </div>
-        <div>
-          ${brewery.formattedAddress}
-        </div>
-      `
-      var icon;
-      if ((this.props.hovered || {}).id == brewery.id) {
-        icon = RedCircle;
-      } else {
-        icon = BluBlank
-      }
-      var marker = new window.google.maps.Marker({
-        map: this.map,
-        title: brewery.name,
-        position: {
-          lat: brewery.latitude,
-          lng: brewery.longitude
-        },
-        icon
-      });
-      var infoWindow = new window.google.maps.InfoWindow({
-        content: contentString
-      })
-      markers.push({
-        id: brewery.id,
-        marker,
-        infoWindow
-      })
-      marker.addListener('click', () => this.handleMarkerClick(marker));
-      bounds.extend(marker.getPosition())
-    })
-    this.map.fitBounds(bounds);
-    this.setState({
-      markers
-    })
-  }
-  componentDidMount() {
-    var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
-    this.map = new window.google.maps.Map(document.getElementById('breweries-map'), {
-      center: myLatLng,
-      zoom: 15
-    });
-    this.service = new google.maps.places.PlacesService(this.map);
-    this.addMarkers()
-  }
-  render () {
     return (
-      <div
-        id='breweries-map-wrapper'
-        className='breweries-map-wrapper'
-      >
-        <div id='breweries-map'></div>
+      <div className='breweries-map'>
+        <div className='sidebar'>
+          <LocationForm
+            startLocation={this.props.location}
+            name='Current Location'
+            onSubmit={this.props.onSubmit}
+          />
+          <List breweries={this.props.data.breweries}/>
+        </div>
+        <Map location={this.props.location} radius={this.props.radius} breweries={this.props.data.breweries} />
       </div>
     )
   }
 }
 
-export default BreweriesMap;
+const BreweriesMapWithData = graphql(BreweriesQuery, {
+  options: ({ location, radius }) => ({ variables: { radius: radius, location: location } })
+})(BreweriesMap)
+
+export default BreweriesMapWithData;

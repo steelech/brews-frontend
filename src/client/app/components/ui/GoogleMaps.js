@@ -15,7 +15,7 @@ class GoogleMaps extends React.Component {
   }
   componentDidMount() {
     var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
-    let map = new window.google.maps.Map(document.getElementById('map'), {
+    let map = new window.google.maps.Map(document.getElementById('location-selector'), {
       center: myLatLng,
       zoom: 8
     });
@@ -98,7 +98,7 @@ class GoogleMaps extends React.Component {
         className='google-maps-wrapper'
       >
         <input id="pac-input" className="controls" type="text" placeholder="Search Box" />
-        <div id='map'></div>
+        <div id='location-selector'></div>
       </div>
     )
   }

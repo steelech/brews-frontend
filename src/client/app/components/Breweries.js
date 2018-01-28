@@ -1,8 +1,7 @@
 import React from 'react';
 import { BreweriesQuery } from '../graphql/queries';
+import BreweriesMapWithData from '../components/breweries/BreweriesMap';
 
-import BreweryListWithData from '../components/breweries/BreweryList';
-import LocationForm from '../components/breweries/LocationForm';
 import styles from '../../styles/components/breweries.less';
 
 class Breweries extends React.Component {
@@ -37,22 +36,16 @@ class Breweries extends React.Component {
   render () {
     return (
       <div className='breweries'>
-        <div className='breweries-header'>
-          <h1>Breweries</h1>
-        </div>
         {
           this.state.loading
             ? <div>
                 Loading
               </div>
-            : <div>
-                <LocationForm
-                  startLocation={this.state.location}
-                  onSubmit={(data) => this.onFormSubmit(data)}
-                  name='Current Location'
-                />
-                <BreweryListWithData radius={this.state.radius} location={this.state.location}/>
-              </div>
+            : <BreweriesMapWithData
+              radius={this.state.radius}
+              location={this.state.location}
+              onSubmit={(data) => this.onFormSubmit(data)}
+              />
         }
       </div>
     )
