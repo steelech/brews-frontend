@@ -7,8 +7,8 @@ import LocationForm from '../../components/breweries/LocationForm';
 import styles from '../../../styles/components/breweries/breweries-map.less';
 
 
-const OpenToggle = () => <i class="fa fa-caret-right"></i>;
-const CloseToggle = () => <i class="fa fa-caret-left"></i>
+const OpenToggle = () => <i className="fa fa-caret-left"></i>;
+const CloseToggle = () => <i className="fa fa-caret-right"></i>
 
 const ListToggle = (props) => {
   var className = 'closed';
