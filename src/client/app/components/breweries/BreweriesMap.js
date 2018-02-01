@@ -8,6 +8,22 @@ import styles from '../../../styles/components/breweries/breweries-map.less';
 
 
 class BreweriesMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovered: null
+    }
+  }
+  handleMouseEnter(data) {
+    this.setState({
+      hovered: data
+    })
+  }
+  handleMouseLeave(data) {
+    this.setState({
+      hovered: null
+    })
+  }
   render() {
     if (this.props.data.loading) {
       return (
@@ -24,9 +40,18 @@ class BreweriesMap extends React.Component {
             name='Current Location'
             onSubmit={this.props.onSubmit}
           />
-          <List breweries={this.props.data.breweries}/>
+          <List
+            breweries={this.props.data.breweries}
+            onMouseEnter={(data) => this.handleMouseEnter(data)}
+            onMouseLeave={(data) => this.handleMouseLeave(data)}
+          />
         </div>
-        <Map location={this.props.location} radius={this.props.radius} breweries={this.props.data.breweries} />
+        <Map
+          hovered={this.state.hovered}
+          location={this.props.location}
+          radius={this.props.radius}
+          breweries={this.props.data.breweries}
+        />
       </div>
     )
   }

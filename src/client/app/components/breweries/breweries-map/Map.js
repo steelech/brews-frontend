@@ -13,6 +13,14 @@ class Map extends React.Component {
       hovered: null
     }
   }
+  handleHover(nextProps) {
+    this.state.markers.map(marker => marker.marker.setIcon(BluBlank));
+
+    if (nextProps.hovered) {
+      var found = this.state.markers.find(marker => marker.id == nextProps.hovered.id);
+      found.marker.setIcon(RedCircle);
+    }
+  }
   handleMarkerClick(thisMarker) {
     this.state.markers.forEach((marker) => {
       if (marker.marker == thisMarker) {
@@ -47,6 +55,7 @@ class Map extends React.Component {
         },
         icon: BluBlank
       });
+
       var infoWindow = new window.google.maps.InfoWindow({
         content: contentString
       })
@@ -71,9 +80,10 @@ class Map extends React.Component {
     };
 
     this.map.panTo(newCenter);
-    this.setState({
-      markers
-    })
+    return markers;
+  }
+  componentWillReceiveProps(nextProps) {
+    this.handleHover(nextProps);
   }
   componentDidMount() {
     var myLatLng = {lat: +this.props.location.split(',')[0], lng: +this.props.location.split(',')[1]};
@@ -82,7 +92,9 @@ class Map extends React.Component {
       zoom: 8
     });
     this.service = new google.maps.places.PlacesService(this.map);
-    this.addMarkers();
+    this.setState({
+      markers: this.addMarkers(),
+    })
   }
   render() {
     return (
