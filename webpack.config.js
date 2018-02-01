@@ -21,14 +21,16 @@ var config = {
       },
       {
         test: /\.less$/,
-        include: STYLES_DIR,
+        include: [STYLES_DIR, path.resolve(__dirname, 'node_modules/font-awesome/less')],
         loader: "style-loader!css-loader!autoprefixer-loader!less-loader"
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         include: ASSETS_DIR,
         loader: "file-loader"
-      }
+      },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader" },
+      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   }
 }

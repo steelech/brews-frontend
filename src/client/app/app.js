@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import 'font-awesome/less/font-awesome.less';
 
 import { ApolloProvider } from 'react-apollo';
 import client from './graphql/client';

@@ -7,11 +7,32 @@ import LocationForm from '../../components/breweries/LocationForm';
 import styles from '../../../styles/components/breweries/breweries-map.less';
 
 
+const OpenToggle = () => <i class="fa fa-caret-right"></i>;
+const CloseToggle = () => <i class="fa fa-caret-left"></i>
+
+const ListToggle = (props) => {
+  var className = 'closed';
+  var Component = CloseToggle;
+  if (props.open) {
+    className = 'open';
+    Component = OpenToggle;
+  }
+  return (
+    <div
+      className={`list-toggle ${className}`}
+      onClick={props.onClick}
+    >
+      <Component />
+    </div>
+  )
+}
+
 class BreweriesMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hovered: null
+      hovered: null,
+      open: true,
     }
   }
   handleMouseEnter(data) {
@@ -24,6 +45,11 @@ class BreweriesMap extends React.Component {
       hovered: null
     })
   }
+  onListToggle() {
+    this.setState({
+      open: !this.state.open,
+    })
+  }
   render() {
     if (this.props.data.loading) {
       return (
@@ -34,18 +60,26 @@ class BreweriesMap extends React.Component {
     }
     return (
       <div className='breweries-map'>
-        <div className='sidebar'>
-          <LocationForm
-            startLocation={this.props.location}
-            name='Current Location'
-            onSubmit={this.props.onSubmit}
-          />
-          <List
-            breweries={this.props.data.breweries}
-            onMouseEnter={(data) => this.handleMouseEnter(data)}
-            onMouseLeave={(data) => this.handleMouseLeave(data)}
-          />
-        </div>
+        <ListToggle
+          open={this.state.open}
+          onClick={() => this.onListToggle()}
+        />
+        {
+          this.state.open
+           ? <div className='sidebar'>
+               <LocationForm
+                 startLocation={this.props.location}
+                 name='Current Location'
+                 onSubmit={this.props.onSubmit}
+               />
+               <List
+                 breweries={this.props.data.breweries}
+                 onMouseEnter={(data) => this.handleMouseEnter(data)}
+                 onMouseLeave={(data) => this.handleMouseLeave(data)}
+               />
+             </div>
+           : null
+        }
         <Map
           hovered={this.state.hovered}
           location={this.props.location}
